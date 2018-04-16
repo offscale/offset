@@ -1,0 +1,30 @@
+{
+  "uuid": "NAME",
+  "private_ips": [
+    "IP"
+  ],
+  "extra": {
+    "user_hostname_port": "USERNAME@IP:22",
+    "ssh_config": {
+      "IdentityFile": "PEM_FILE",
+      "LogLevel": "FATAL",
+      "HostName": "IP",
+      "IdentitiesOnly": "yes",
+      "PasswordAuthentication": "no",
+      "Host": "NAME",
+      "UserKnownHostsFile": "/dev/null",
+      "User": "USERNAME",
+      "StrictHostKeyChecking": "yes",
+      "Port": "22"
+    },
+    "user": "USERNAME",
+    "provider": "azure_arm"
+  },
+  "driver": "AzureNodeDriver",
+  "state": "running",
+  "public_ips": [
+    "IP"
+  ],
+  "id": "NAME",
+  "name": "NAME"
+}

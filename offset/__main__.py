@@ -18,6 +18,7 @@ def _build_parser(parser):
         "-n",
         "--name",
         help="Name for node. Used for bookkeeping, and other packages may set the hostname to this.",
+        required=True,
     )
     parser.add_argument(
         "--version",
@@ -25,13 +26,14 @@ def _build_parser(parser):
         version="{} {}".format(modules[__name__].__package__, __version__),
     )
     parser.add_argument(
-        "--etcd", help="Server location\t[127.0.0.1:4001]", default="127.0.0.1:4001"
+        "--etcd", help="Server location\t[127.0.0.1:2379]", default="127.0.0.1:2379"
     )
     parser.add_argument(
         "--purpose",
         "--cluster",
         dest="purpose",
         help="Purpose of the node. Groups all together (hierarchically). Defaults to: 'unclustered'",
+        default="unclustered",
     )
     return parser
 

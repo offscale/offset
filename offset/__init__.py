@@ -9,7 +9,7 @@ from os import path
 from logging.config import dictConfig as _dictConfig
 from pkg_resources import resource_filename
 
-from etcd import Client
+import etcd3
 
 __author__ = "Samuel Marks"
 __version__ = "0.0.1"
@@ -17,7 +17,7 @@ __version__ = "0.0.1"
 
 def get_logger(name=None):
     with open(path.join(path.dirname(__file__), "_data", "logging.yml"), "rt") as f:
-        data = yaml.load(f)
+        data = yaml.safe_load(f)
     _dictConfig(data)
     return logging.getLogger(name=name)
 
@@ -53,8 +53,12 @@ def set_node(username, password, identity_file, hostname, etcd, name, purpose):
         if not identity_file:
             d["extra"]["no_key_filename"] = True
 
+    if purpose is None:
+        raise TypeError("purpose must be set")
+    elif name is None:
+        raise TypeError("name must be set")
     key = "{purpose}/{name}".format(purpose=purpose, name=name)
     host, port = etcd.split(":")
-    Client(host=host, port=int(port)).set(key, dumps(d, indent=4))
+    etcd3.client(host=host, port=int(port)).put(key, dumps(d, indent=4))
 
     root_logger.info("Set: {key}".format(key=key))

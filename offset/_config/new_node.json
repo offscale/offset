@@ -6,7 +6,7 @@
   "extra": {
     "user_hostname_port": "USERNAME@IP:22",
     "ssh_config": {
-      "IdentityFile": "PEM_FILE",
+      "IdentityFile": null,
       "LogLevel": "FATAL",
       "HostName": "IP",
       "IdentitiesOnly": "yes",

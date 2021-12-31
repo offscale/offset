@@ -1,15 +1,14 @@
 #!/usr/bin/env python
 
-import yaml
 import logging
-
-from json import load, dumps
-from sys import modules
-from os import path
+from json import dumps, load
 from logging.config import dictConfig as _dictConfig
-from pkg_resources import resource_filename
+from os import path
+from sys import modules
 
 import etcd3
+import yaml
+from pkg_resources import resource_filename
 
 __author__ = "Samuel Marks"
 __version__ = "0.0.1"

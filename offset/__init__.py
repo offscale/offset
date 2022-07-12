@@ -35,7 +35,7 @@ def get_logger(name=None):
 root_logger = get_logger()
 
 
-def set_node(username, password, identity_file, hostname, etcd, name, purpose):
+def set_node(username, password, os, identity_file, hostname, etcd, name, purpose):
     """
     Set the node (str->JSON mapping saved in etcd)
 
@@ -44,6 +44,9 @@ def set_node(username, password, identity_file, hostname, etcd, name, purpose):
 
     :param password: Password (to login to instance)
     :type password: ```Optional[str]```
+
+    :param os: Operating System to store in `extra.os` property of LibCloud's `Node`. If unspecified OS is inferred from `--user`.
+    :type os: ```Optional[str]```
 
     :param identity_file: Identity file (to login to instance)
     :type identity_file: ```Optional[str]```
@@ -91,6 +94,10 @@ def set_node(username, password, identity_file, hostname, etcd, name, purpose):
         raise TypeError("purpose must be set")
     elif name is None:
         raise TypeError("name must be set")
+
+    if os:
+        d["extra"]["os"] = os
+
     key = "{purpose}/{name}".format(purpose=purpose, name=name)
     host, port = etcd.split(":")
     etcd3.client(host=host, port=int(port)).put(key, dumps(d, indent=4))

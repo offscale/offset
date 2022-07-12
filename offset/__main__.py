@@ -29,6 +29,10 @@ def _build_parser(parser):
         "-u", "--user", help="Login username", dest="username", required=True
     )
     parser.add_argument(
+        "--os",
+        help="Operating System to store in `extra.os` property of LibCloud's `Node`. If unspecified OS is inferred from `--user`.",
+    )
+    parser.add_argument(
         "-n",
         "--name",
         help="Name for node. Used for bookkeeping, and other packages may set the hostname to this.",

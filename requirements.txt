@@ -1,1 +1,2 @@
-python-etcd
+etcd3
+pyyaml

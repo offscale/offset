@@ -1,3 +1,8 @@
+#!/usr/bin/env python
+"""
+Command-line interface to `offset`
+"""
+
 from argparse import ArgumentParser
 from sys import modules
 
@@ -5,6 +10,15 @@ from offset import __version__, set_node
 
 
 def _build_parser(parser):
+    """
+    Parser builder
+
+    :param parser: instanceof ArgumentParser
+    :type parser: ```ArgumentParser```
+
+    :return: instanceof ArgumentParser
+    :rtype: ```ArgumentParser```
+    """
     parser.add_argument("-p", "--password", help="Password for login")
     parser.add_argument("-i", "--identity-file", help="pem file for login")
 

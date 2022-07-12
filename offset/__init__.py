@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+"""
+SDK interface for `offset`
+"""
 
 import logging
 from json import dumps, load
@@ -11,10 +14,18 @@ import yaml
 from pkg_resources import resource_filename
 
 __author__ = "Samuel Marks"
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 
 
 def get_logger(name=None):
+    """
+    Create logger—with optional name—with the logging.yml config
+    :param name: Optional name of logger
+    :type name: ```Optional[str]```
+
+    :return: instanceof Logger
+    :rtype: ```Logger```
+    """
     with open(path.join(path.dirname(__file__), "_data", "logging.yml"), "rt") as f:
         data = yaml.safe_load(f)
     _dictConfig(data)
@@ -25,6 +36,30 @@ root_logger = get_logger()
 
 
 def set_node(username, password, identity_file, hostname, etcd, name, purpose):
+    """
+    Set the node (str->JSON mapping saved in etcd)
+
+    :param username: Username (to login to instance)
+    :type username: ```Optional[str]```
+
+    :param password: Password (to login to instance)
+    :type password: ```Optional[str]```
+
+    :param identity_file: Identity file (to login to instance)
+    :type identity_file: ```Optional[str]```
+
+    :param hostname: Hostname of instance (e.g., public IP address, public DNS name)
+    :type hostname: ```str```
+
+    :param etcd: "host:port" connection string for etcd
+    :type etcd: ```str```
+
+    :param name: name of node (etcd key becomes "${name}/${purpose}")
+    :type name: ```str```
+
+    :param purpose: purpose of node (etcd key becomes "${name}/${purpose}")
+    :type purpose: ```str```
+    """
     with open(
         path.join(
             path.dirname(
@@ -61,3 +96,6 @@ def set_node(username, password, identity_file, hostname, etcd, name, purpose):
     etcd3.client(host=host, port=int(port)).put(key, dumps(d, indent=4))
 
     root_logger.info("Set: {key}".format(key=key))
+
+
+__all__ = ["set_node", "__version__"]

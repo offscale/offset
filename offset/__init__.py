@@ -6,20 +6,27 @@ SDK interface for `offset`
 import logging
 from json import dumps, load
 from logging.config import dictConfig as _dictConfig
+from operator import methodcaller
 from os import path
-from sys import modules
+from sys import modules, version
 
 import etcd3
 import yaml
 from pkg_resources import resource_filename
 
 __author__ = "Samuel Marks"
-__version__ = "0.0.2"
+__version__ = "0.0.3-alpha"
+
+if version[0] == "2":
+    to_bytes = methodcaller("encode")
+else:
+    to_bytes = methodcaller("encode", "utf8")
 
 
 def get_logger(name=None):
     """
     Create logger—with optional name—with the logging.yml config
+
     :param name: Optional name of logger
     :type name: ```Optional[str]```
 
@@ -100,7 +107,7 @@ def set_node(username, password, os, identity_file, hostname, etcd, name, purpos
 
     key = "{purpose}/{name}".format(purpose=purpose, name=name)
     host, port = etcd.split(":")
-    etcd3.client(host=host, port=int(port)).put(key, dumps(d, indent=4))
+    etcd3.client(host=host, port=int(port)).put(key, to_bytes(dumps(d, indent=4)))
 
     root_logger.info("Set: {key}".format(key=key))
 

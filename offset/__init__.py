@@ -15,7 +15,7 @@ import yaml
 from pkg_resources import resource_filename
 
 __author__ = "Samuel Marks"
-__version__ = "0.0.3-alpha"
+__version__ = "0.0.3-beta"
 
 if version[0] == "2":
     to_bytes = methodcaller("encode")
